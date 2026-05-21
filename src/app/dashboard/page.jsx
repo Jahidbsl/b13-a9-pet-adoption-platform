@@ -37,10 +37,7 @@ const DashboardPage = () => {
   return (
     <div className="min-h-screen bg-[#FAF5FF] flex">
 
-      {/* Sidebar */}
-      <div className="w-[300px] shrink-0">
-        <Sidebar />
-      </div>
+    
 
       {/* Main Content */}
       <main className="flex-1 min-h-screen">
