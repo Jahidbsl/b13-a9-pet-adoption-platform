@@ -19,7 +19,7 @@ const DashboardPage = () => {
       <Sidebar />
 
       {/* Main Content */}
-      <main className="lg:ml-[280px] min-h-screen">
+      <main className="lg:ml-[280px]">
         {/* Topbar */}
         <header className="sticky top-0 z-30 h-20 lg:h-24 bg-white/70 backdrop-blur-xl border-b border-purple-100 px-4 lg:px-8 flex items-center justify-between">
           {/* Left */}
