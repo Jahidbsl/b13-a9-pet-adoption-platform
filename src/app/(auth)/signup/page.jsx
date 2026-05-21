@@ -11,13 +11,7 @@ import {
   TextField,
 } from "@heroui/react";
 
-import {
-  Eye,
-  MailCheck,
-  PawPrintIcon,
-  User,
-  ImageIcon,
-} from "lucide-react";
+import { Eye, MailCheck, PawPrintIcon, User, ImageIcon } from "lucide-react";
 
 import Image from "next/image";
 import Link from "next/link";
@@ -36,13 +30,11 @@ const SignUpPage = () => {
 
   const [isVisible, setIsVisible] = useState(false);
 
-  const [isConfirmVisible, setIsConfirmVisible] =
-    useState(false);
+  const [isConfirmVisible, setIsConfirmVisible] = useState(false);
 
   const [password, setPassword] = useState("");
 
-  const [confirmPassword, setConfirmPassword] =
-    useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
 
   const [loading, setLoading] = useState(false);
 
@@ -52,29 +44,21 @@ const SignUpPage = () => {
 
     const formData = new FormData(e.currentTarget);
 
-    const Alldata = Object.fromEntries(
-      formData.entries()
-    );
+    const Alldata = Object.fromEntries(formData.entries());
 
     // Password Validation
     if (Alldata.password.length < 6) {
-      toast.error(
-        "Password must be at least 6 characters"
-      );
+      toast.error("Password must be at least 6 characters");
       return;
     }
 
     if (!/[A-Z]/.test(Alldata.password)) {
-      toast.error(
-        "Password must contain one uppercase letter"
-      );
+      toast.error("Password must contain one uppercase letter");
       return;
     }
 
     if (!/[a-z]/.test(Alldata.password)) {
-      toast.error(
-        "Password must contain one lowercase letter"
-      );
+      toast.error("Password must contain one lowercase letter");
       return;
     }
 
@@ -86,33 +70,24 @@ const SignUpPage = () => {
     try {
       setLoading(true);
 
-     
-     
-      const { data, error } =
-        await authClient.signUp.email({
-          email: Alldata.email,
-          password: Alldata.password,
-          name: Alldata.name,
-          image: Alldata.photo,
-          autoSignIn: false,
-          callbackURL: "/",
-        });
-     
+      const { data, error } = await authClient.signUp.email({
+        email: Alldata.email,
+        password: Alldata.password,
+        name: Alldata.name,
+        image: Alldata.photo,
+        autoSignIn: false,
+        callbackURL: "/",
+      });
 
       // Fake Delay
-      await new Promise((resolve) =>
-        setTimeout(resolve, 1500)
-      );
+      await new Promise((resolve) => setTimeout(resolve, 1500));
 
-      toast.success(
-        `Registration Successful for: ${Alldata.name}`,
-        {
-          position: "top-center",
-          autoClose: 3000,
-          theme: "light",
-          transition: Bounce,
-        }
-      );
+      toast.success(`Registration Successful for: ${Alldata.name}`, {
+        position: "top-center",
+        autoClose: 3000,
+        theme: "light",
+        transition: Bounce,
+      });
 
       e.target.reset();
 
@@ -134,14 +109,11 @@ const SignUpPage = () => {
 
   return (
     <div className="min-h-screen bg-[#FAF5FF] flex items-center justify-center px-4 py-10">
-      <div className="w-full max-w-md bg-white rounded-[32px] shadow-2xl border border-purple-100 p-8 md:p-10">
+      <div className="w-full max-w-lg bg-white rounded-[32px] shadow-2xl border border-purple-100 p-8 md:p-10">
         {/* Logo */}
         <div className="flex flex-col items-center text-center">
           <div className="w-16 h-16 rounded-3xl bg-[#8B5CF6] flex items-center justify-center shadow-lg shadow-purple-200">
-            <PawPrintIcon
-              className="text-white"
-              size={30}
-            />
+            <PawPrintIcon className="text-white" size={30} />
           </div>
 
           <h1 className="text-4xl font-extrabold text-[#8B5CF6] mt-5">
@@ -161,10 +133,7 @@ const SignUpPage = () => {
         </div>
 
         {/* Form */}
-        <Form
-          onSubmit={handleSubmit}
-          className="flex flex-col gap-5 mt-8"
-        >
+        <Form onSubmit={handleSubmit} className="flex flex-col gap-5 mt-8">
           {/* Name */}
           <TextField isRequired name="name">
             <Label className="mb-2 font-semibold text-[#374151]">
@@ -193,20 +162,14 @@ const SignUpPage = () => {
             name="email"
             type="email"
             validate={(value) => {
-              if (
-                !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(
-                  value
-                )
-              ) {
+              if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(value)) {
                 return "Please enter a valid email address";
               }
 
               return null;
             }}
           >
-            <Label className="mb-2 font-semibold text-[#374151]">
-              Email
-            </Label>
+            <Label className="mb-2 font-semibold text-[#374151]">Email</Label>
 
             <div className="relative group">
               <MailCheck
@@ -259,14 +222,10 @@ const SignUpPage = () => {
                 <InputGroup.Input
                   name="password"
                   className="w-full bg-transparent px-4 py-3 text-[#374151] placeholder:text-gray-400 outline-none"
-                  type={
-                    isVisible ? "text" : "password"
-                  }
+                  type={isVisible ? "text" : "password"}
                   placeholder="Enter Your Password"
                   value={password}
-                  onChange={(e) =>
-                    setPassword(e.target.value)
-                  }
+                  onChange={(e) => setPassword(e.target.value)}
                 />
 
                 <InputGroup.Suffix className="pr-2">
@@ -276,23 +235,26 @@ const SignUpPage = () => {
                     variant="light"
                     radius="full"
                     type="button"
-                    onPress={() =>
-                      setIsVisible(!isVisible)
-                    }
+                    onPress={() => setIsVisible(!isVisible)}
                     className="text-gray-500 hover:bg-purple-100 hover:text-[#8B5CF6] transition"
                   >
-                    {isVisible ? (
-                      <Eye size={18} />
-                    ) : (
-                      <BsEyeSlash size={18} />
-                    )}
+                    {isVisible ? <Eye size={18} /> : <BsEyeSlash size={18} />}
                   </Button>
                 </InputGroup.Suffix>
               </InputGroup>
 
               <div className="absolute inset-0 rounded-2xl opacity-0 group-focus-within:opacity-100 transition duration-300 pointer-events-none bg-[#8B5CF6]/5 blur-xl"></div>
             </div>
-
+            {password &&
+              (password.length < 8 ||
+                !/[A-Z]/.test(password) ||
+                !/[a-z]/.test(password) ||
+                !/[0-9]/.test(password)) && (
+                <p className="text-red-500 text-sm mt-2">
+                  Password must be at least 8 characters and contain an
+                  uppercase letter, lowercase letter, and a number
+                </p>
+              )}
           </TextField>
 
           {/* Confirm Password */}
@@ -305,18 +267,10 @@ const SignUpPage = () => {
               <InputGroup className="w-full rounded-2xl border border-purple-200 bg-white overflow-hidden transition-all duration-300 focus-within:border-[#8B5CF6] focus-within:ring-4 focus-within:ring-purple-100 shadow-sm">
                 <InputGroup.Input
                   className="w-full bg-transparent px-4 py-3 text-[#374151] placeholder:text-gray-400 outline-none"
-                  type={
-                    isConfirmVisible
-                      ? "text"
-                      : "password"
-                  }
+                  type={isConfirmVisible ? "text" : "password"}
                   placeholder="Confirm Your Password"
                   value={confirmPassword}
-                  onChange={(e) =>
-                    setConfirmPassword(
-                      e.target.value
-                    )
-                  }
+                  onChange={(e) => setConfirmPassword(e.target.value)}
                 />
 
                 <InputGroup.Suffix className="pr-2">
@@ -326,11 +280,7 @@ const SignUpPage = () => {
                     variant="light"
                     radius="full"
                     type="button"
-                    onPress={() =>
-                      setIsConfirmVisible(
-                        !isConfirmVisible
-                      )
-                    }
+                    onPress={() => setIsConfirmVisible(!isConfirmVisible)}
                     className="text-gray-500 hover:bg-purple-100 hover:text-[#8B5CF6] transition"
                   >
                     {isConfirmVisible ? (
@@ -345,13 +295,11 @@ const SignUpPage = () => {
               <div className="absolute inset-0 rounded-2xl opacity-0 group-focus-within:opacity-100 transition duration-300 pointer-events-none bg-[#8B5CF6]/5 blur-xl"></div>
             </div>
 
-            {confirmPassword &&
-              password !== confirmPassword && (
-                <p className="text-red-500 text-sm mt-2">
-                  Password & Confirm Password
-                  must be same
-                </p>
-              )}
+            {confirmPassword && password !== confirmPassword && (
+              <p className="text-red-500 text-sm mt-2">
+                Password & Confirm Password must be same
+              </p>
+            )}
           </TextField>
 
           {/* Signup Button */}
@@ -368,9 +316,7 @@ const SignUpPage = () => {
         <div className="flex items-center gap-4 my-7">
           <div className="flex-1 h-[1px] bg-gray-200"></div>
 
-          <span className="text-sm text-gray-400">
-            OR
-          </span>
+          <span className="text-sm text-gray-400">OR</span>
 
           <div className="flex-1 h-[1px] bg-gray-200"></div>
         </div>

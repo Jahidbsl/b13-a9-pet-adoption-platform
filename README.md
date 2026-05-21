@@ -36,3 +36,4 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
 
 Primary: #8B5CF6 → Soft Purple Secondary: #F472B6 → Pink Accent: #34D399 → Mint Green Background: #FAF5FF Text: #374151 
+baki: goodle login,fetured card, search&filter,wishlist

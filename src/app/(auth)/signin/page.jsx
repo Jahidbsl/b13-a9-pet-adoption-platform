@@ -24,65 +24,49 @@ const SignInPage = () => {
   const [isVisible, setIsVisible] = useState(false);
 
   const [loading, setLoading] = useState(false);
+   const [password, setPassword] = useState("");
 
-    const handleSubmit = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     const formData = new FormData(e.currentTarget);
 
-    const Alldata = Object.fromEntries(
-      formData.entries()
-    );
+    const Alldata = Object.fromEntries(formData.entries());
 
     // Password Validation
     if (Alldata.password.length < 6) {
-      toast.error(
-        "Password must be at least 6 characters"
-      );
+      toast.error("Password must be at least 6 characters");
       return;
     }
 
     if (!/[A-Z]/.test(Alldata.password)) {
-      toast.error(
-        "Password must contain one uppercase letter"
-      );
+      toast.error("Password must contain one uppercase letter");
       return;
     }
 
     if (!/[a-z]/.test(Alldata.password)) {
-      toast.error(
-        "Password must contain one lowercase letter"
-      );
+      toast.error("Password must contain one lowercase letter");
       return;
     }
 
-  
-
     try {
       setLoading(true);
-      
-      const { data, error } =
-        await authClient.signIn.email({
-          email: Alldata.email,
-          password: Alldata.password,
-          callbackURL: "/",
-        });
-     
+
+      const { data, error } = await authClient.signIn.email({
+        email: Alldata.email,
+        password: Alldata.password,
+        callbackURL: "/",
+      });
 
       // Fake Delay
-      await new Promise((resolve) =>
-        setTimeout(resolve, 1500)
-      );
+      await new Promise((resolve) => setTimeout(resolve, 1500));
 
-      toast.success(
-        `Sign In Successful for: ${Alldata.name}`,
-        {
-          position: "top-center",
-          autoClose: 3000,
-          theme: "light",
-          transition: Bounce,
-        }
-      );
+      toast.success(`Sign In Successful for: ${Alldata.name}`, {
+        position: "top-center",
+        autoClose: 3000,
+        theme: "light",
+        transition: Bounce,
+      });
 
       e.target.reset();
 
@@ -131,9 +115,7 @@ const SignInPage = () => {
         </div>
 
         {/* Form */}
-        <Form
-        onSubmit={handleSubmit}
-        className="flex flex-col gap-5 mt-8">
+        <Form onSubmit={handleSubmit} className="flex flex-col gap-5 mt-8">
           {/* Email */}
           <TextField
             isRequired
@@ -182,6 +164,9 @@ const SignInPage = () => {
                   className="w-full bg-transparent px-4 py-3 text-[#374151] placeholder:text-gray-400 outline-none"
                   type={isVisible ? "text" : "password"}
                   placeholder="Enter Your Password"
+                  name="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                 />
 
                 {/* Eye Button */}
@@ -202,14 +187,21 @@ const SignInPage = () => {
               {/* Bottom Glow */}
               <div className="absolute inset-0 rounded-2xl opacity-0 group-focus-within:opacity-100 transition duration-300 pointer-events-none bg-[#8B5CF6]/5 blur-xl"></div>
             </div>
+            {password &&
+              (password.length < 8 ||
+                !/[A-Z]/.test(password) ||
+                !/[a-z]/.test(password) ||
+                !/[0-9]/.test(password)) && (
+                <p className="text-red-500 text-sm mt-2">
+                  Password must be at least 8 characters and contain an
+                  uppercase letter, lowercase letter, and a number
+                </p>
+              )}
           </TextField>
 
           {/* Forgot Password */}
           <div className="flex justify-end w-full">
-            <Link
-              href="/forgot-password"
-              className="text-sm text-[#F472B6] hover:underline"
-            >
+            <Link href="#" className="text-sm text-[#F472B6] hover:underline">
               Forgot Password?
             </Link>
           </div>
@@ -220,8 +212,7 @@ const SignInPage = () => {
             isDisabled={loading}
             className="w-full bg-[#8B5CF6] hover:bg-[#7C3AED] text-white rounded-2xl py-6 text-base font-semibold transition"
           >
-             {loading ? "Signing in..." : "Sign In"}
-              
+            {loading ? "Signing in..." : "Sign In"}
           </Button>
         </Form>
 
