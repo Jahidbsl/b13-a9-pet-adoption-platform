@@ -1,15 +1,15 @@
-import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
-import { AppSidebar } from "@/components/Sidebar";
+import Sidebar from "@/components/Sidebar";
 
 export default function Layout({ children }) {
   return (
-    <SidebarProvider>
-      <AppSidebar />
+    <div className="flex min-h-screen bg-[#FAF5FF]">
+      {/* Sidebar */}
+      <Sidebar />
 
-      <main className="w-full">
-        <SidebarTrigger className="m-4 lg:hidden" />
+      {/* Main Content */}
+      <main className="flex-1 lg:ml-[300px]">
         {children}
       </main>
-    </SidebarProvider>
+    </div>
   );
 }
