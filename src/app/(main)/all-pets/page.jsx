@@ -48,7 +48,7 @@ const AllPetsPage = () => {
 
 
       const res = await fetch(
-        `${process.env.SERVER_URI}/pets?${params.toString()}`,{
+        `${process.env.NEXT_PUBLIC_SERVER_URI}/pets?${params.toString()}`,{
          
         }
       );

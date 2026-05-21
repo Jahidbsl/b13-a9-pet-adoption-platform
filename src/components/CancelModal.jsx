@@ -12,7 +12,7 @@ const CancelModal = ({ adoption }) => {
 const handleDelete = async () => {
   try {
     const res = await fetch(
-      `${process.env.SERVER_URI}/adoptions/${adoption?._id}`,
+      `${process.env.NEXT_PUBLIC_SERVER_URI}/adoptions/${adoption?._id}`,
       {
         method: "DELETE",
         headers: {

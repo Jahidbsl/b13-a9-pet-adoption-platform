@@ -26,7 +26,7 @@ const {data: tokenData} = await authClient.token();
 
 
   try {
-    const res = await fetch(`${process.env.SERVER_URI}/add-pet`, {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URI}/add-pet`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

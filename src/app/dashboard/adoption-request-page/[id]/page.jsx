@@ -27,7 +27,7 @@ const AdoptionRequestDetailsPage = () => {
       setLoading(true);
 
       const res = await fetch(
-        `${process.env.SERVER_URI}/adoptions/pet/${id}`
+        `${process.env.NEXT_PUBLIC_SERVER_URI}/adoptions/pet/${id}`
       );
 
       const data = await res.json();
@@ -47,7 +47,7 @@ const AdoptionRequestDetailsPage = () => {
   const handleStatusChange = async (requestId, status) => {
     try {
       const res = await fetch(
-        `${process.env.SERVER_URI}/adoptions/${requestId}`,
+        `${process.env.NEXT_PUBLIC_SERVER_URI}/adoptions/${requestId}`,
         {
           method: "PATCH",
           headers: { "Content-Type": "application/json" },

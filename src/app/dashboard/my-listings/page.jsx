@@ -24,7 +24,7 @@ const MyListings = () => {
 
   const fetchAdoptions = async () => {
     try {
-     const res = await fetch(`${process.env.SERVER_URI}/adoptions`);
+     const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URI}/adoptions`);
 
 if (!res.ok) {
   console.log("API ERROR:", res.status);
@@ -42,7 +42,7 @@ setAdoptions(data);
   }, []);
   const fetchPets = async () => {
     try {
-      const res = await fetch(`${process.env.SERVER_URI}/pets/user/${userId}`);
+      const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URI}/pets/user/${userId}`);
       const data = await res.json();
 
       setPets(data || []);
@@ -55,7 +55,7 @@ setAdoptions(data);
 
   const updateStatus = async (id, status) => {
     try {
-      const res = await fetch(`${process.env.SERVER_URI}/adoptions/${id}`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URI}/adoptions/${id}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",

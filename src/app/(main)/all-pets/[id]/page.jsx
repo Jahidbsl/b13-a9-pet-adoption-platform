@@ -24,7 +24,7 @@ const PetDetailsPage = async ({ params }) => {
 });
 
 console.log("tokenData:", tokenData); 
-const res = await fetch(`${process.env.SERVER_URI}/pets/${id}`, {
+const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URI}/pets/${id}`, {
   cache: "no-store",
   headers: {
     authorization: `Bearer ${tokenData.token}`,

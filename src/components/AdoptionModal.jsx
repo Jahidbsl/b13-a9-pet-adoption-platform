@@ -46,7 +46,7 @@ export default function AdoptionModal({ pet }) {
     const { data: tokenData } = await authClient.token();
     console.log(tokenData);
     try {
-      const res = await fetch(`${process.env.SERVER_URI}/adopt`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URI}/adopt`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -77,7 +77,7 @@ export default function AdoptionModal({ pet }) {
         setChecking(true);
 
         const res = await fetch(
-          `${process.env.SERVER_URI}/adoptions/check?petId=${pet?._id}&userId=${user?.id}`,
+          `${process.env.NEXT_PUBLIC_SERVER_URI}/adoptions/check?petId=${pet?._id}&userId=${user?.id}`,
         );
 
         const data = await res.json();

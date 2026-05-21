@@ -33,7 +33,7 @@ const AdoptionTable = () => {
 const fetchAdoptions = async () => {
   try {
     const res = await fetch(
-      `${process.env.SERVER_URI}/adoptions/user/${userId}`
+      `${process.env.NEXT_PUBLIC_SERVER_URI}/adoptions/user/${userId}`
     );
 
     const data = await res.json();

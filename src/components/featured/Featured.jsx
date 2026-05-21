@@ -12,7 +12,7 @@ const Featured = () => {
 
   const fetchFeaturedPets = async () => {
     try {
-      const res = await fetch(`${process.env.SERVER_URI}/pets`);
+      const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URI}/pets`);
       const data = await res.json();
 
       const featured = data
