@@ -35,24 +35,7 @@ const DashboardPage = () => {
         {/* Topbar */}
         <header className="sticky top-0 z-30 h-24 bg-white/70 backdrop-blur-xl border-b border-purple-100 px-4 lg:px-8 flex items-center justify-between">
           {/* Left */}
-          <div className="flex items-center gap-4">
-            <button
-              onClick={() => setSidebarOpen(!sidebarOpen)}
-              className="lg:hidden w-12 h-12 rounded-2xl bg-[#8B5CF6]/10 flex items-center justify-center"
-            >
-              <Menu size={24} className="text-[#8B5CF6]" />
-            </button>
-
-            <div>
-              <h2 className="text-3xl font-extrabold text-[#374151]">
-                Welcome Back 👋
-              </h2>
-
-              <p className="text-gray-500 mt-1">
-                Track your pets & adoption activity
-              </p>
-            </div>
-          </div>
+    
 
           {/* Right */}
           <div className="flex items-center gap-4">
@@ -286,4 +269,4 @@ const DashboardPage = () => {
   );
 };
 
-export default DashboardPage;
+export default DashboardPage; 
