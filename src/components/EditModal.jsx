@@ -34,13 +34,15 @@ const EditModal = ({ pet}) => {
 
   const formData = new FormData(e.target);
   const updatedData = Object.fromEntries(formData.entries());
-
+   const { data: tokenData } = await authClient.token();
+    console.log(tokenData);
   try {
-    const res = await fetch(`http://localhost:5000/pets/${_id}`, {
+    const res = await fetch(`${process.env.SERVER_URI}/pets/${_id}`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
         userid: user?.id,
+        authorization: `Bearer ${tokenData?.token}`,
       },
       body: JSON.stringify(updatedData),
     });

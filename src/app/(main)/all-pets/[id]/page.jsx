@@ -13,19 +13,29 @@ import {
 } from "lucide-react";
 
 import AdoptionModal from "@/components/AdoptionModal";
+import { auth } from "@/lib/auth";
+import { headers } from "next/headers";
 
 const PetDetailsPage = async ({ params }) => {
   const { id } = await params;
 
-  const res = await fetch(`http://localhost:5000/pets/${id}`, {
-    cache: "no-store",
-  });
+  const tokenData = await auth.api.getToken({
+  headers: await headers(),
+});
 
-  if (!res.ok) {
-    throw new Error("Failed to fetch pet");
-  }
+console.log("tokenData:", tokenData); 
+const res = await fetch(`${process.env.SERVER_URI}/pets/${id}`, {
+  cache: "no-store",
+  headers: {
+    authorization: `Bearer ${tokenData.token}`,
+  },
+});
 
-  const pet = await res.json();
+if (!res.ok) {
+  throw new Error("Failed to fetch pet");
+}
+
+const pet = await res.json();
 
   if (!pet) {
     return (

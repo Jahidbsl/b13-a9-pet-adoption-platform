@@ -13,6 +13,7 @@ const MyListings = () => {
   const [pets, setPets] = useState([]);
   const [loading, setLoading] = useState(true);
   const [adoptionCount, setAdoptionCount] = useState(0);
+  const [adoptions, setAdoptions] = useState([]);
 
   const { data: session } = authClient.useSession();
   const userId = session?.user?.id;
@@ -21,9 +22,27 @@ const MyListings = () => {
     if (userId) fetchPets();
   }, [userId]);
 
+  const fetchAdoptions = async () => {
+    try {
+     const res = await fetch(`${process.env.SERVER_URI}/adoptions`);
+
+if (!res.ok) {
+  console.log("API ERROR:", res.status);
+  return;
+}
+
+const data = await res.json();
+setAdoptions(data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  useEffect(() => {
+    fetchAdoptions();
+  }, []);
   const fetchPets = async () => {
     try {
-      const res = await fetch(`http://localhost:5000/pets/user/${userId}`);
+      const res = await fetch(`${process.env.SERVER_URI}/pets/user/${userId}`);
       const data = await res.json();
 
       setPets(data || []);
@@ -36,7 +55,7 @@ const MyListings = () => {
 
   const updateStatus = async (id, status) => {
     try {
-      const res = await fetch(`http://localhost:5000/adoptions/${id}`, {
+      const res = await fetch(`${process.env.SERVER_URI}/adoptions/${id}`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -78,7 +97,11 @@ const MyListings = () => {
 
         <div className="p-4 bg-white shadow rounded-xl">
           <p className="text-gray-500">Total Requests</p>
-          <h2 className="text-xl font-bold">0</h2>
+          <h2 className="text-xl font-bold">
+
+                {adoptions.filter(a => a.status === "pending").length}
+
+          </h2>
         </div>
 
         <div className="p-4 bg-white shadow rounded-xl">
@@ -123,8 +146,14 @@ const MyListings = () => {
 
                 {/* REQUESTS */}
                 <td className="p-3 flex items-center gap-2">
-                  <Users size={16} />
-                  <span>0</span>
+                  <div className="flex items-center gap-2">
+                    <Users size={16} />
+          <span>
+  {adoptions.filter(
+    (a) => String(a.petId) === String(pet._id)
+  ).length || 0}
+</span>
+                  </div>
                 </td>
 
                 {/* ACTIONS */}

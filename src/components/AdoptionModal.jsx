@@ -43,11 +43,15 @@ export default function AdoptionModal({ pet }) {
       status: "pending",
       createdAt: new Date(),
     };
-
+    const { data: tokenData } = await authClient.token();
+    console.log(tokenData);
     try {
-      const res = await fetch("http://localhost:5000/adopt", {
+      const res = await fetch(`${process.env.SERVER_URI}/adopt`, {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          authorization: `Bearer ${tokenData?.token}`,
+        },
         body: JSON.stringify(data),
       });
 
@@ -73,7 +77,7 @@ export default function AdoptionModal({ pet }) {
         setChecking(true);
 
         const res = await fetch(
-          `http://localhost:5000/adoptions/check?petId=${pet?._id}&userId=${user?.id}`,
+          `${process.env.SERVER_URI}/adoptions/check?petId=${pet?._id}&userId=${user?.id}`,
         );
 
         const data = await res.json();

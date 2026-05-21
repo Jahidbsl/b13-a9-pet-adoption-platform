@@ -10,12 +10,15 @@ const DeleteModal = ({ pet }) => {
   const user = session?.user;
   const router = useRouter();
   const handleDelete = async () => {
+       const { data: tokenData } = await authClient.token();
+        console.log(tokenData);
     try {
-      const res = await fetch(`http://localhost:5000/pets/${pet._id}`, {
+      const res = await fetch(`${process.env.SERVER_URI}/pets/${pet._id}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
           userid: user.id,
+          authorization: `Bearer ${tokenData?.token}`,
         },
       });
       const data = await res.json();

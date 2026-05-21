@@ -1,5 +1,6 @@
 "use client";
 
+
 import { authClient } from "@/lib/auth-client";
 import React from "react";
 import { toast } from "react-toastify";
@@ -20,12 +21,16 @@ const AddpetPage = () => {
 
   console.log(Alldata);
 
+const {data: tokenData} = await authClient.token();
+  console.log(tokenData);
+
+
   try {
-    const res = await fetch("http://localhost:5000/add-pet", {
+    const res = await fetch(`${process.env.SERVER_URI}/add-pet`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-       
+        authorization: `Bearer ${tokenData?.token}`,
       },
       body: JSON.stringify( Alldata),
     });
