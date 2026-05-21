@@ -25,7 +25,12 @@ const SignInPage = () => {
 
   const [loading, setLoading] = useState(false);
    const [password, setPassword] = useState("");
-
+ const handelGoogleLogin = async () => {
+    await authClient.signIn.social({
+      provider: "google",
+      callbackURL: "/",
+    });
+  };
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -227,6 +232,7 @@ const SignInPage = () => {
 
         {/* Google Login */}
         <Button
+         onClick={handelGoogleLogin}
           variant="bordered"
           className="w-full rounded-2xl py-6 border border-purple-200 hover:bg-purple-50"
         >
