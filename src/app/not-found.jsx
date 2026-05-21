@@ -7,7 +7,6 @@ export default function NotFound() {
   return (
     <div className="min-h-screen bg-[#FAF5FF] flex items-center justify-center px-6">
       <div className="max-w-xl text-center">
-        
         {/* Illustration */}
         <div className="relative mb-10">
           <div className="w-40 h-40 mx-auto rounded-full bg-[#E9D5FF] opacity-70 blur-3xl absolute inset-0"></div>
@@ -17,9 +16,7 @@ export default function NotFound() {
               404
             </div>
 
-            <div className="mt-4 animate-bounce text-5xl">
-              👾
-            </div>
+            <div className="mt-4 animate-bounce text-5xl">👾</div>
           </div>
         </div>
 
@@ -29,8 +26,8 @@ export default function NotFound() {
         </h1>
 
         <p className="text-lg text-gray-500 mb-8 leading-relaxed">
-          The page you are looking for might have been removed,
-          renamed, or is temporarily unavailable.
+          The page you are looking for might have been removed, renamed, or is
+          temporarily unavailable.
         </p>
 
         {/* Buttons */}
@@ -42,14 +39,12 @@ export default function NotFound() {
             <Home size={20} />
             Go Home
           </Link>
-
-          <button
-            onClick={() => window.history.back()}
-            className="flex items-center gap-2 border-2 border-[#F472B6] text-[#F472B6] hover:bg-[#F472B6] hover:text-white px-6 py-3 rounded-2xl transition-all duration-300"
-          >
-            <ArrowLeft size={20} />
-            Go Back
-          </button>
+          <Link href={"/"}>
+            <button className="flex items-center gap-2 border-2 border-[#F472B6] text-[#F472B6] hover:bg-[#F472B6] hover:text-white px-6 py-3 rounded-2xl transition-all duration-300">
+              <ArrowLeft size={20} />
+              Go Back
+            </button>
+          </Link>
         </div>
 
         {/* Decorative Dots */}
