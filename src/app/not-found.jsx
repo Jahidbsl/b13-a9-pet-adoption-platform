@@ -1,9 +1,12 @@
-// app/not-found.jsx
+"use client";
 
+
+import { useRouter } from 'next/navigation';
 import Link from "next/link";
 import { Home, ArrowLeft } from "lucide-react";
 
 export default function NotFound() {
+    const router = useRouter();
   return (
     <div className="min-h-screen bg-[#FAF5FF] flex items-center justify-center px-6">
       <div className="max-w-xl text-center">
@@ -39,12 +42,13 @@ export default function NotFound() {
             <Home size={20} />
             Go Home
           </Link>
-          <Link href={"/"}>
-            <button className="flex items-center gap-2 border-2 border-[#F472B6] text-[#F472B6] hover:bg-[#F472B6] hover:text-white px-6 py-3 rounded-2xl transition-all duration-300">
+         
+            <button onClick={() => router.back()}
+            className="flex items-center gap-2 border-2 border-[#F472B6] text-[#F472B6] hover:bg-[#F472B6] hover:text-white px-6 py-3 rounded-2xl transition-all duration-300">
               <ArrowLeft size={20} />
               Go Back
             </button>
-          </Link>
+          
         </div>
 
         {/* Decorative Dots */}
