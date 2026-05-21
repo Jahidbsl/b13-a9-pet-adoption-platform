@@ -4,30 +4,34 @@ import { mongodbAdapter } from "better-auth/adapters/mongodb";
 import { jwt } from "better-auth/plugins";
 
 const client = new MongoClient(process.env.MONGODB_URI);
+
 const db = client.db("pet-blossom");
 
 export const auth = betterAuth({
   database: mongodbAdapter(db, {
-    // Optional: if you don't provide a client, database transactions won't be enabled.
-    client
+    client,
   }),
-    emailAndPassword: { 
-    enabled: true, 
-  },
-   socialProviders: {
-        google: { 
-            clientId: process.env.GOOGLE_CLIENT_ID, 
-            clientSecret: process.env.GOOGLE_CLIENT_SECRET, 
-        }, 
-session:{
-  cookieCache:{
+
+  emailAndPassword: {
     enabled: true,
-    strategy:"jwt",
-    maxAge: 60 * 60 * 24 * 7, // 7 days
-  }
-},
+  },
+
+  socialProviders: {
+    google: {
+      clientId: process.env.GOOGLE_CLIENT_ID,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    },
+  },
+
+  session: {
+    cookieCache: {
+      enabled: true,
+      strategy: "jwt",
+      maxAge: 60 * 60 * 24 * 7, // 7 days
+    },
+  },
+
   plugins: [
-    // Add any plugins you want to use here
-    jwt()
-  ]
+    jwt(),
+  ],
 });
