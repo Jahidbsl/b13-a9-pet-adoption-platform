@@ -16,8 +16,7 @@ import {
 const DashboardPage = () => {
   return (
     <div className="min-h-screen bg-[#FAF5FF]">
-      {/* Sidebar */}
-      <Sidebar />
+   
 
       {/* Main Content */}
       <main className="lg:ml-[300px] min-h-screen">
