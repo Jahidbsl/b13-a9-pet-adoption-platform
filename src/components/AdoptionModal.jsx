@@ -17,10 +17,10 @@ export default function AdoptionModal({ pet }) {
   const [loading, setLoading] = useState(false);
 
   const isOwner = String(user?.id) === String(pet?.userId);
-  const isAdopted = pet?.status?.toLowerCase() === "adopted";
+  const isAdopted = pet?.status?.toLowerCase() === "approved";
   const isPending = pet?.status?.toLowerCase() === "pending";
-  const isCancelled = pet?.status?.toLowerCase() === "cancelled";
-  const isAccepted = pet?.status?.toLowerCase() === "accepted";
+  const isrejected = pet?.status?.toLowerCase() === "rejected";
+  
 
   const handleAdoption = async (e, close) => {
     e.preventDefault();
