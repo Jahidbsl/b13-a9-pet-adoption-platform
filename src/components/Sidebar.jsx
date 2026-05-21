@@ -1,7 +1,8 @@
 "use client";
 
 import NextLink from "next/link";
-import React, { useState } from "react";
+import { usePathname } from "next/navigation";
+import React, { useState, useEffect } from "react";
 
 import {
   LayoutDashboard,
@@ -16,8 +17,11 @@ import {
 } from "lucide-react";
 
 const Sidebar = () => {
-  const [sidebarOpen, setSidebarOpen] =
-    useState(false);
+ 
+
+  const pathname = usePathname();
+
+ 
 
   const menuItems = [
     {
@@ -55,10 +59,36 @@ const Sidebar = () => {
   return (
     <>
       {/* Mobile Topbar */}
-      <div className="lg:hidden fixed top-0 left-0 right-0 z-40 h-20 bg-white/80 backdrop-blur-xl border-b border-purple-100 px-4 flex items-center justify-between">
+      <div
+        className="
+          lg:hidden
+          fixed top-0 left-0 right-0
+          z-40
+          h-20
+          bg-white/80
+          backdrop-blur-xl
+          border-b border-purple-100
+          px-4
+          flex items-center justify-between
+        "
+      >
+        {/* Logo */}
         <div className="flex items-center gap-3">
-          <div className="w-12 h-12 rounded-2xl bg-gradient-to-r from-[#8B5CF6] to-[#F472B6] flex items-center justify-center">
-            <PawPrint className="text-white" size={22} />
+          <div
+            className="
+              w-12 h-12
+              rounded-2xl
+              bg-gradient-to-r
+              from-[#8B5CF6]
+              to-[#F472B6]
+              flex items-center justify-center
+              shadow-lg shadow-purple-200
+            "
+          >
+            <PawPrint
+              className="text-white"
+              size={22}
+            />
           </div>
 
           <div>
@@ -74,10 +104,15 @@ const Sidebar = () => {
 
         {/* Menu Button */}
         <button
-          onClick={() =>
-            setSidebarOpen(true)
-          }
-          className="w-12 h-12 rounded-2xl bg-[#8B5CF6]/10 flex items-center justify-center"
+          onClick={() => setSidebarOpen(true)}
+          className="
+            w-12 h-12
+            rounded-2xl
+            bg-[#8B5CF6]/10
+            flex items-center justify-center
+            hover:bg-[#8B5CF6]/20
+            transition-all duration-300
+          "
         >
           <Menu
             className="text-[#8B5CF6]"
@@ -89,12 +124,14 @@ const Sidebar = () => {
       {/* Sidebar */}
       <aside
         className={`
-          fixed lg:sticky top-0 left-0 z-50
+          fixed top-0 left-0 z-50
           h-screen w-[300px]
-          bg-white/90 backdrop-blur-2xl
+          bg-white/90
+          backdrop-blur-2xl
           border-r border-purple-100
           shadow-2xl lg:shadow-none
           transition-transform duration-300 ease-in-out
+          overflow-hidden
           ${
             sidebarOpen
               ? "translate-x-0"
@@ -103,14 +140,39 @@ const Sidebar = () => {
         `}
       >
         {/* Header */}
-        <div className="h-24 px-6 flex items-center justify-between border-b border-purple-100">
+        <div
+          className="
+            h-24
+            px-6
+            flex items-center justify-between
+            border-b border-purple-100
+          "
+        >
           <div className="flex items-center">
-            <div className="w-14 h-14 rounded-3xl bg-gradient-to-r from-[#8B5CF6] to-[#F472B6] flex items-center justify-center shadow-xl shadow-purple-200">
+            <div
+              className="
+                w-14 h-14
+                rounded-3xl
+                bg-gradient-to-r
+                from-[#8B5CF6]
+                to-[#F472B6]
+                flex items-center justify-center
+                shadow-xl shadow-purple-200
+              "
+            >
               <PawPrint className="text-white" />
             </div>
 
             <div className="ml-4">
-              <h1 className="text-2xl font-extrabold bg-gradient-to-r from-[#8B5CF6] to-[#F472B6] bg-clip-text text-transparent">
+              <h1
+                className="
+                  text-2xl font-extrabold
+                  bg-gradient-to-r
+                  from-[#8B5CF6]
+                  to-[#F472B6]
+                  bg-clip-text text-transparent
+                "
+              >
                 Pet Blossom
               </h1>
 
@@ -125,7 +187,15 @@ const Sidebar = () => {
             onClick={() =>
               setSidebarOpen(false)
             }
-            className="lg:hidden w-10 h-10 rounded-xl bg-[#8B5CF6]/10 flex items-center justify-center"
+            className="
+              lg:hidden
+              w-10 h-10
+              rounded-xl
+              bg-[#8B5CF6]/10
+              flex items-center justify-center
+              hover:bg-[#8B5CF6]/20
+              transition-all duration-300
+            "
           >
             <X
               size={22}
@@ -135,39 +205,83 @@ const Sidebar = () => {
         </div>
 
         {/* Menu */}
-        <div className="p-5 space-y-3 overflow-y-auto h-[calc(100vh-96px)]">
+        <div
+          className="
+            p-5
+            space-y-3
+            overflow-y-auto
+            h-[calc(100vh-96px)]
+          "
+        >
           {menuItems.map((item, index) => {
             const Icon = item.icon;
+
+            const isActive =
+              pathname === item.href;
 
             return (
               <NextLink
                 key={index}
                 href={item.href}
-                onClick={() =>
-                  setSidebarOpen(false)
-                }
-                className="
-                  group flex items-center justify-between
-                  px-5 py-4 rounded-3xl
+                className={`
+                  group
+                  flex items-center justify-between
+                  px-5 py-4
+                  rounded-3xl
                   transition-all duration-300
-                  hover:bg-[#8B5CF6]/10
-                  text-[#374151]
                   hover:translate-x-1
-                "
+                  ${
+                    isActive
+                      ? `
+                        bg-gradient-to-r
+                        from-[#8B5CF6]
+                        to-[#F472B6]
+                        text-white
+                        shadow-xl shadow-purple-200
+                      `
+                      : `
+                        text-[#374151]
+                        hover:bg-[#8B5CF6]/10
+                      `
+                  }
+                `}
               >
+                {/* Left */}
                 <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 rounded-2xl flex items-center justify-center bg-[#F3E8FF] group-hover:bg-white transition">
+                  {/* Icon */}
+                  <div
+                    className={`
+                      w-12 h-12
+                      rounded-2xl
+                      flex items-center justify-center
+                      transition-all duration-300
+                      ${
+                        isActive
+                          ? "bg-white/20"
+                          : "bg-[#F3E8FF] group-hover:bg-white"
+                      }
+                    `}
+                  >
                     <Icon size={22} />
                   </div>
 
+                  {/* Text */}
                   <span className="font-semibold text-sm md:text-base">
                     {item.name}
                   </span>
                 </div>
 
+                {/* Arrow */}
                 <ChevronRight
                   size={18}
-                  className="opacity-60"
+                  className={`
+                    transition-all duration-300
+                    ${
+                      isActive
+                        ? "opacity-100"
+                        : "opacity-50 group-hover:translate-x-1"
+                    }
+                  `}
                 />
               </NextLink>
             );
@@ -175,18 +289,9 @@ const Sidebar = () => {
         </div>
       </aside>
 
-      {/* Overlay */}
-      {sidebarOpen && (
-        <div
-          onClick={() =>
-            setSidebarOpen(false)
-          }
-          className="fixed inset-0 bg-black/40 backdrop-blur-sm z-40 lg:hidden"
-        />
-      )}
+  
 
-      {/* Mobile Space */}
-      <div className="h-20 lg:hidden"></div>
+  
     </>
   );
 };
