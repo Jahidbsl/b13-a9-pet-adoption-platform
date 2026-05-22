@@ -6,7 +6,7 @@ import { PawPrint } from "lucide-react";
 import { redirect, useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 
-const EditModal = ({ pet}) => {
+const EditModal = ({ pet }) => {
   const { data: session } = authClient.useSession();
 
   const user = session?.user;
@@ -29,42 +29,47 @@ const EditModal = ({ pet}) => {
     _id,
   } = pet;
 
- const handleSubmit = async (e) => {
-  e.preventDefault();
+  const handleSubmit = async (e) => {
+    e.preventDefault();
 
-  const formData = new FormData(e.target);
-  const updatedData = Object.fromEntries(formData.entries());
-   const { data: tokenData } = await authClient.token();
+    const formData = new FormData(e.target);
+    const updatedData = Object.fromEntries(formData.entries());
+    const { data: tokenData } = await authClient.token();
     console.log(tokenData);
-  try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URI}/pets/${_id}`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-        userid: user?.id,
-        authorization: `Bearer ${tokenData?.token}`,
-      },
-      body: JSON.stringify(updatedData),
-    });
+    try {
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_SERVER_URI}/pets/${_id}`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            userid: user?.id,
+            authorization: `Bearer ${tokenData?.token}`,
+          },
+          body: JSON.stringify(updatedData),
+        },
+      );
 
-    const data = await res.json();
-    console.log(data);
+      const data = await res.json();
+      console.log(data);
 
-    if (res.ok) {
-      toast.success("Pet updated successfully!");
-      router.refresh(); 
-    } else {
-      toast.error(data.message || "Update failed!");
+      if (res.ok) {
+        toast.success("Pet updated successfully!");
+        router.refresh();
+      } else {
+        toast.error(data.message || "Update failed!");
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error("Error updating pet.");
     }
-  } catch (error) {
-    console.error(error);
-    toast.error("Error updating pet.");
-  }
-};
+  };
 
   return (
     <Modal>
-       <Button variant="secondary" className={'rounded-sm'}>Edit</Button>
+      <Button variant="secondary" className={"rounded-sm"}>
+        Edit
+      </Button>
 
       <Modal.Backdrop className="bg-black/40 backdrop-blur-sm">
         <Modal.Container placement="center">
@@ -92,87 +97,191 @@ const EditModal = ({ pet}) => {
                   className="grid grid-cols-1 md:grid-cols-2 gap-6"
                 >
                   {/* Pet Name */}
-                  <input
-                    name="name"
-                    defaultValue={name}
-                    className="input"
-                    placeholder="Pet Name"
-                  />
+                  {/* Pet Name */}
+                  <div>
+                    <label className="block text-gray-700 font-semibold mb-2">
+                      Pet Name
+                    </label>
+
+                    <input
+                      type="text"
+                      name="name"
+                      defaultValue={name}
+                      placeholder="Pet Name"
+                      className="input"
+                    />
+                  </div>
 
                   {/* Species */}
-                  <select
-                    name="species"
-                    defaultValue={species}
-                    className="input"
-                  >
-                    <option>Dog</option>
-                    <option>Cat</option>
-                    <option>Bird</option>
-                    <option>Rabbit</option>
-                    <option>Other</option>
-                  </select>
+                  <div>
+                    <label className="block text-gray-700 font-semibold mb-2">
+                      Species
+                    </label>
+
+                    <select
+                      name="species"
+                      defaultValue={species}
+                      className="input"
+                    >
+                      <option>Dog</option>
+                      <option>Cat</option>
+                      <option>Bird</option>
+                      <option>Rabbit</option>
+                      <option>Other</option>
+                    </select>
+                  </div>
 
                   {/* Breed */}
-                  <input name="breed" defaultValue={breed} className="input" />
+                  <div>
+                    <label className="block text-gray-700 font-semibold mb-2">
+                      Breed
+                    </label>
+
+                    <input
+                      type="text"
+                      name="breed"
+                      defaultValue={breed}
+                      placeholder="Breed"
+                      className="input"
+                    />
+                  </div>
 
                   {/* Age */}
-                  <input name="age" defaultValue={age} className="input" />
+                  <div>
+                    <label className="block text-gray-700 font-semibold mb-2">
+                      Age
+                    </label>
+
+                    <input
+                      type="number"
+                      name="age"
+                      defaultValue={age}
+                      placeholder="Age"
+                      className="input"
+                    />
+                  </div>
 
                   {/* Gender */}
-                  <select name="gender" defaultValue={gender} className="input">
-                    <option>Male</option>
-                    <option>Female</option>
-                  </select>
+                  <div>
+                    <label className="block text-gray-700 font-semibold mb-2">
+                      Gender
+                    </label>
+
+                    <select
+                      name="gender"
+                      defaultValue={gender}
+                      className="input"
+                    >
+                      <option>Male</option>
+                      <option>Female</option>
+                    </select>
+                  </div>
 
                   {/* Image */}
-                  <input
-                    name="image"
-                    defaultValue={image}
-                    className="input md:col-span-2"
-                  />
+                  <div>
+                    <label className="block text-gray-700 font-semibold mb-2">
+                      Image URL
+                    </label>
+
+                    <input
+                      type="text"
+                      name="image"
+                      defaultValue={image}
+                      placeholder="Image URL"
+                      className="input md:col-span-2"
+                    />
+                  </div>
 
                   {/* Health */}
-                  <input
-                    name="health"
-                    defaultValue={health}
-                    className="input"
-                  />
+                  <div>
+                    <label className="block text-gray-700 font-semibold mb-2">
+                      Health Status
+                    </label>
+
+                    <input
+                      type="text"
+                      name="health"
+                      defaultValue={health}
+                      placeholder="Health Status"
+                      className="input"
+                    />
+                  </div>
 
                   {/* Vaccination */}
-                  <select
-                    name="vaccination"
-                    defaultValue={vaccination}
-                    className="input"
-                  >
-                    <option>Vaccinated</option>
-                    <option>Not Vaccinated</option>
-                  </select>
+                  <div>
+                    <label className="block text-gray-700 font-semibold mb-2">
+                      Vaccination
+                    </label>
+
+                    <select
+                      name="vaccination"
+                      defaultValue={vaccination}
+                      className="input"
+                    >
+                      <option>Vaccinated</option>
+                      <option>Not Vaccinated</option>
+                    </select>
+                  </div>
 
                   {/* Location */}
-                  <input
-                    name="location"
-                    defaultValue={location}
-                    className="input"
-                  />
+                  <div>
+                    <label className="block text-gray-700 font-semibold mb-2">
+                      Location
+                    </label>
+
+                    <input
+                      type="text"
+                      name="location"
+                      defaultValue={location}
+                      placeholder="Location"
+                      className="input"
+                    />
+                  </div>
 
                   {/* Fee */}
-                  <input name="fee" defaultValue={fee} className="input" />
+                  <div>
+                    <label className="block text-gray-700 font-semibold mb-2">
+                      Adoption Fee
+                    </label>
+
+                    <input
+                      type="number"
+                      name="fee"
+                      defaultValue={fee}
+                      placeholder="Fee"
+                      className="input"
+                    />
+                  </div>
 
                   {/* Email */}
-                  <input
-                    name="email"
-                    defaultValue={email}
-                    readOnly
-                    className="input md:col-span-2 bg-gray-100"
-                  />
+                  <div className="md:col-span-2">
+                    <label className="block text-gray-700 font-semibold mb-2">
+                      Owner Email
+                    </label>
+
+                    <input
+                      type="email"
+                      name="email"
+                      defaultValue={email}
+                      readOnly
+                      className="input md:col-span-2 bg-gray-100"
+                    />
+                  </div>
 
                   {/* Description */}
-                  <textarea
-                    name="description"
-                    defaultValue={description}
-                    className="input md:col-span-2"
-                    rows={5}
-                  />
+                  <div className="md:col-span-2">
+                    <label className="block text-gray-700 font-semibold mb-2">
+                      Description
+                    </label>
+
+                    <textarea
+                      name="description"
+                      defaultValue={description}
+                      className="input md:col-span-2"
+                      rows={5}
+                      placeholder="Write something about the pet..."
+                    />
+                  </div>
 
                   {/* Buttons */}
                   <div className="md:col-span-2 flex justify-end gap-3 mt-4">

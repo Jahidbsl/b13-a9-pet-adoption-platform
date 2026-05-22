@@ -17,11 +17,9 @@ export default function AdoptionModal({ pet }) {
   const [loading, setLoading] = useState(false);
 
   const isOwner = String(user?.id) === String(pet?.userId);
-const isAdopted =
-  pet?.status?.toLowerCase() === "adopted";
+  const isAdopted = pet?.status?.toLowerCase() === "adopted";
   const isPending = pet?.status?.toLowerCase() === "pending";
   const isrejected = pet?.status?.toLowerCase() === "rejected";
-  
 
   const handleAdoption = async (e, close) => {
     e.preventDefault();
@@ -60,6 +58,7 @@ const isAdopted =
 
       if (res.ok) {
         toast.success("Adoption request sent!");
+        setHasRequested(true);
         e.target.reset();
         close?.();
       } else {
