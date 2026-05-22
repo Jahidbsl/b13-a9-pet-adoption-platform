@@ -24,15 +24,17 @@ const MyListings = () => {
 
   const fetchAdoptions = async () => {
     try {
-     const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URI}/adoptions`);
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_SERVER_URI}/adoptions`,
+      );
 
-if (!res.ok) {
-  console.log("API ERROR:", res.status);
-  return;
-}
+      if (!res.ok) {
+        console.log("API ERROR:", res.status);
+        return;
+      }
 
-const data = await res.json();
-setAdoptions(data);
+      const data = await res.json();
+      setAdoptions(data);
     } catch (err) {
       console.log(err);
     }
@@ -42,7 +44,9 @@ setAdoptions(data);
   }, []);
   const fetchPets = async () => {
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URI}/pets/user/${userId}`);
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_SERVER_URI}/pets/user/${userId}`,
+      );
       const data = await res.json();
 
       setPets(data || []);
@@ -55,13 +59,16 @@ setAdoptions(data);
 
   const updateStatus = async (id, status) => {
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URI}/adoptions/${id}`, {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_SERVER_URI}/adoptions/${id}`,
+        {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ status }),
         },
-        body: JSON.stringify({ status }),
-      });
+      );
 
       const data = await res.json();
 
@@ -98,9 +105,11 @@ setAdoptions(data);
         <div className="p-4 bg-white shadow rounded-xl">
           <p className="text-gray-500">Total Requests</p>
           <h2 className="text-xl font-bold">
-
-                {adoptions.filter(a => a.status === "pending").length}
-
+            {
+              adoptions.filter((a) =>
+                pets.some((p) => String(p._id) === String(a.petId)),
+              ).length
+            }
           </h2>
         </div>
 
@@ -148,11 +157,11 @@ setAdoptions(data);
                 <td className="p-3 flex items-center gap-2">
                   <div className="flex items-center gap-2">
                     <Users size={16} />
-          <span>
-  {adoptions.filter(
-    (a) => String(a.petId) === String(pet._id)
-  ).length || 0}
-</span>
+                    <span>
+                      {adoptions.filter(
+                        (a) => String(a.petId) === String(pet._id),
+                      ).length || 0}
+                    </span>
                   </div>
                 </td>
 
