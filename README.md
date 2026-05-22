@@ -1,39 +1,71 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# 🐾 Pet Adoption Platform
 
-## Getting Started
+A modern, responsive **Pet Adoption Web Application** built with **Next.js**, designed to connect loving homes with pets in need.  
+This platform provides a smooth, interactive experience with authentication, search, wishlist, and featured pet listings.
 
-First, run the development server:
+---
+
+## 🚀 Live Demo
+
+👉 **Visit the live project:**  
+https://b13-a9-pet-adoption-platform.vercel.app
+
+---
+
+## ✨ Features
+
+### 🔐 Authentication
+- Google Login integration
+- Secure user session handling
+- Protected routes for user actions
+
+### 🐶 Pet Listings
+- Featured pet cards
+- Detailed pet information
+- Beautiful responsive grid layout
+
+### 🔎 Search & Filter
+- Real-time search functionality
+- Filter pets by category, breed, age, or status
+- Fast and responsive UI updates
+
+### ❤️ Wishlist System
+- Add/remove pets to wishlist
+- Save favorite pets for later
+- Smooth UI interactions
+
+### 📱 Responsive Design
+- Mobile-first UI
+- Tablet and desktop optimized
+- Clean sidebar navigation
+
+---
+
+## 🎨 UI Design Theme
+
+- **Primary:** `#8B5CF6` (Soft Purple)
+- **Secondary:** `#F472B6` (Pink)
+- **Accent:** `#34D399` (Mint Green)
+- **Background:** `#FAF5FF`
+- **Text:** `#374151`
+
+---
+
+## 🛠️ Tech Stack
+
+- ⚡ Next.js (App Router)
+- ⚛️ React
+- 🎨 Tailwind CSS
+- 🔐 Google Authentication
+- 🔄 REST API integration
+- ☁️ Vercel Deployment
+
+---
+
+## 📦 Installation
 
 ```bash
+git clone https://github.com/your-username/pet-adoption-platform.git
+cd pet-adoption-platform
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
-
-Primary: #8B5CF6 → Soft Purple Secondary: #F472B6 → Pink Accent: #34D399 → Mint Green Background: #FAF5FF Text: #374151 
-baki: goodle login,fetured card, search&filter,wishlist
