@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Sidebar from "@/components/Sidebar";
 import {
   Bell,
@@ -22,7 +23,6 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-// Fake data
 const chartData = [
   { name: "Mon", value: 12 },
   { name: "Tue", value: 18 },
@@ -34,12 +34,53 @@ const chartData = [
 ];
 
 const DashboardPage = () => {
+  const [adoptions, setAdoptions] = useState([]);
+  const [pets, setPets] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [adoptRes, petRes] = await Promise.all([
+          fetch(`${process.env.NEXT_PUBLIC_SERVER_URI}/adoptions`),
+          fetch(`${process.env.NEXT_PUBLIC_SERVER_URI}/pets`),
+        ]);
+
+        const adoptionsData = await adoptRes.json();
+        const petsData = await petRes.json();
+
+        setAdoptions(adoptionsData);
+        setPets(petsData);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  // ================= LOGIC =================
+  const myPetIds = pets.map((p) => String(p._id));
+
+  const totalRequests = adoptions.filter((a) =>
+    myPetIds.includes(String(a.petId))
+  ).length;
+
+  const pendingRequests = adoptions.filter(
+    (a) =>
+      myPetIds.includes(String(a.petId)) &&
+      a.status === "pending"
+  ).length;
+
+  const approvedRequests = adoptions.filter(
+    (a) =>
+      myPetIds.includes(String(a.petId)) &&
+      a.status === "approved"
+  ).length;
+
+  const myListings = pets.length;
+
   return (
     <div className="min-h-screen bg-[#FAF5FF] flex">
-
-    
-
-      {/* Main Content */}
       <main className="flex-1 min-h-screen">
 
         {/* Topbar */}
@@ -76,34 +117,44 @@ const DashboardPage = () => {
           {/* Stats */}
           <div className="grid grid-cols-1 sm:grid-cols-2 2xl:grid-cols-4 gap-6">
 
-            {/* Card */}
-            {[{
-              icon: HeartHandshake,
-              color: "#8B5CF6",
-              label: "Adoption Requests",
-              value: 12,
-              sub: "+12% this month"
-            },{
-              icon: Heart,
-              color: "#F472B6",
-              label: "Wishlist Pets",
-              value: 18,
-              sub: "+8 new pets"
-            },{
-              icon: PawPrint,
-              color: "#34D399",
-              label: "My Listings",
-              value: 8,
-              sub: "Active listings"
-            },{
-              icon: Activity,
-              color: "#F59E0B",
-              label: "Total Activities",
-              value: 24,
-              sub: "Very active"
-            }].map((item, i) => (
-              <div key={i} className="bg-white rounded-[32px] p-6 shadow-lg border border-purple-100 hover:-translate-y-1 transition">
-                <div className={`w-16 h-16 rounded-3xl flex items-center justify-center`} style={{ backgroundColor: item.color + "20" }}>
+            {[
+              {
+                icon: HeartHandshake,
+                color: "#8B5CF6",
+                label: "Total Requests",
+                value: totalRequests,
+                sub: "All adoption requests",
+              },
+              {
+                icon: Activity,
+                color: "#F472B6",
+                label: "Pending Requests",
+                value: pendingRequests,
+                sub: "Waiting for approval",
+              },
+              {
+                icon: PawPrint,
+                color: "#34D399",
+                label: "My Listings",
+                value: myListings,
+                sub: "Your pets",
+              },
+              {
+                icon: Heart,
+                color: "#F59E0B",
+                label: "Approved Requests",
+                value: approvedRequests,
+                sub: "Successfully adopted",
+              },
+            ].map((item, i) => (
+              <div
+                key={i}
+                className="bg-white rounded-[32px] p-6 shadow-lg border border-purple-100 hover:-translate-y-1 transition"
+              >
+                <div
+                  className="w-16 h-16 rounded-3xl flex items-center justify-center"
+                  style={{ backgroundColor: item.color + "20" }}
+                >
                   <item.icon size={30} style={{ color: item.color }} />
                 </div>
 
@@ -155,17 +206,25 @@ const DashboardPage = () => {
               </h2>
 
               <div className="space-y-5">
-                {[1,2,3].map((i) => (
-                  <div key={i} className="flex items-center justify-between bg-[#FAF5FF] p-4 rounded-3xl border border-purple-100">
+                {[1, 2, 3].map((i) => (
+                  <div
+                    key={i}
+                    className="flex items-center justify-between bg-[#FAF5FF] p-4 rounded-3xl border border-purple-100"
+                  >
                     <div className="flex items-center gap-4">
                       <div className="w-12 h-12 rounded-2xl bg-gradient-to-r from-purple-500 to-pink-400" />
                       <div>
                         <h3 className="font-bold">Bella</h3>
-                        <p className="text-sm text-gray-500">Golden Retriever</p>
+                        <p className="text-sm text-gray-500">
+                          Golden Retriever
+                        </p>
                       </div>
                     </div>
 
-                    <Star className="text-pink-500 fill-pink-500" size={18} />
+                    <Star
+                      className="text-pink-500 fill-pink-500"
+                      size={18}
+                    />
                   </div>
                 ))}
               </div>
