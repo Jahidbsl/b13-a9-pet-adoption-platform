@@ -1,7 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import Sidebar from "@/components/Sidebar";
+import { useEffect, useMemo, useState } from "react";
 import {
   Bell,
   Search,
@@ -29,31 +28,6 @@ const getDayName = (date) => {
   });
 };
 
-const weekMap = {
-  Mon: 0,
-  Tue: 0,
-  Wed: 0,
-  Thu: 0,
-  Fri: 0,
-  Sat: 0,
-  Sun: 0,
-};
-
-// chart data logic
-adoptions.forEach((a) => {
-  const day = getDayName(a.createdAt);
-
-  if (weekMap[day] !== undefined) {
-    weekMap[day] += 1;
-  }
-});
-
-// convert to chart format
-const chartData = Object.keys(weekMap).map((day) => ({
-  name: day,
-  value: weekMap[day],
-}));
-
 const DashboardPage = () => {
   const [adoptions, setAdoptions] = useState([]);
   const [pets, setPets] = useState([]);
@@ -79,26 +53,57 @@ const DashboardPage = () => {
     fetchData();
   }, []);
 
-  // ================= LOGIC =================
-  const myPetIds = pets.map((p) => String(p._id));
+  // ================= SAFE DATA =================
+  const safeAdoptions = adoptions || [];
+  const safePets = pets || [];
 
-  const totalRequests = adoptions.filter((a) =>
+  const myPetIds = safePets.map((p) => String(p._id));
+
+  const totalRequests = safeAdoptions.filter((a) =>
     myPetIds.includes(String(a.petId))
   ).length;
 
-  const pendingRequests = adoptions.filter(
+  const pendingRequests = safeAdoptions.filter(
     (a) =>
       myPetIds.includes(String(a.petId)) &&
       a.status === "pending"
   ).length;
 
-  const approvedRequests = adoptions.filter(
+  const approvedRequests = safeAdoptions.filter(
     (a) =>
       myPetIds.includes(String(a.petId)) &&
       a.status === "approved"
   ).length;
 
-  const myListings = pets.length;
+  const myListings = safePets.length;
+
+  // ================= CHART DATA (FIXED) =================
+  const chartData = useMemo(() => {
+    const weekMap = {
+      Mon: 0,
+      Tue: 0,
+      Wed: 0,
+      Thu: 0,
+      Fri: 0,
+      Sat: 0,
+      Sun: 0,
+    };
+
+    safeAdoptions.forEach((a) => {
+      if (!a.createdAt) return;
+
+      const day = getDayName(a.createdAt);
+
+      if (weekMap[day] !== undefined) {
+        weekMap[day] += 1;
+      }
+    });
+
+    return Object.keys(weekMap).map((day) => ({
+      name: day,
+      value: weekMap[day],
+    }));
+  }, [safeAdoptions]);
 
   return (
     <div className="min-h-screen bg-[#FAF5FF] flex">
@@ -144,28 +149,24 @@ const DashboardPage = () => {
                 color: "#8B5CF6",
                 label: "Total Requests",
                 value: totalRequests,
-                sub: "All adoption requests",
               },
               {
                 icon: Activity,
                 color: "#F472B6",
                 label: "Pending Requests",
                 value: pendingRequests,
-                sub: "Waiting for approval",
               },
               {
                 icon: PawPrint,
                 color: "#34D399",
                 label: "My Listings",
                 value: myListings,
-                sub: "Your pets",
               },
               {
                 icon: Heart,
                 color: "#F59E0B",
                 label: "Approved Requests",
                 value: approvedRequests,
-                sub: "Successfully adopted",
               },
             ].map((item, i) => (
               <div
@@ -187,70 +188,34 @@ const DashboardPage = () => {
 
                 <div className="flex items-center gap-2 mt-4 text-green-500 font-medium">
                   <TrendingUp size={16} />
-                  {item.sub}
+                  Live data
                 </div>
               </div>
             ))}
           </div>
 
-          {/* Chart + Activity */}
-          <div className="grid grid-cols-1 xl:grid-cols-3 gap-8">
+          {/* Chart */}
+          <div className="xl:col-span-2 bg-white rounded-[32px] p-6 shadow-xl border border-purple-100">
+            <h2 className="text-2xl font-bold mb-6">
+              Adoption Overview
+            </h2>
 
-            {/* Chart */}
-            <div className="xl:col-span-2 bg-white rounded-[32px] p-6 shadow-xl border border-purple-100">
-              <h2 className="text-2xl font-bold mb-6">
-                Adoption Overview
-              </h2>
-
-              <div className="h-80 w-full">
-                <ResponsiveContainer width="100%" height="100%">
-                  <LineChart data={chartData}>
-                    <CartesianGrid strokeDasharray="3 3" />
-                    <XAxis dataKey="name" />
-                    <YAxis />
-                    <Tooltip />
-                    <Line
-                      type="monotone"
-                      dataKey="value"
-                      stroke="#8B5CF6"
-                      strokeWidth={3}
-                    />
-                  </LineChart>
-                </ResponsiveContainer>
-              </div>
+            <div className="h-80 w-full">
+              <ResponsiveContainer width="100%" height="100%">
+                <LineChart data={chartData}>
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="name" />
+                  <YAxis />
+                  <Tooltip />
+                  <Line
+                    type="monotone"
+                    dataKey="value"
+                    stroke="#8B5CF6"
+                    strokeWidth={3}
+                  />
+                </LineChart>
+              </ResponsiveContainer>
             </div>
-
-            {/* Activity */}
-            <div className="bg-white rounded-[32px] p-6 shadow-xl border border-purple-100">
-              <h2 className="text-2xl font-bold mb-6">
-                Favourite Pets
-              </h2>
-
-              <div className="space-y-5">
-                {[1, 2, 3].map((i) => (
-                  <div
-                    key={i}
-                    className="flex items-center justify-between bg-[#FAF5FF] p-4 rounded-3xl border border-purple-100"
-                  >
-                    <div className="flex items-center gap-4">
-                      <div className="w-12 h-12 rounded-2xl bg-gradient-to-r from-purple-500 to-pink-400" />
-                      <div>
-                        <h3 className="font-bold">Bella</h3>
-                        <p className="text-sm text-gray-500">
-                          Golden Retriever
-                        </p>
-                      </div>
-                    </div>
-
-                    <Star
-                      className="text-pink-500 fill-pink-500"
-                      size={18}
-                    />
-                  </div>
-                ))}
-              </div>
-            </div>
-
           </div>
 
         </section>
