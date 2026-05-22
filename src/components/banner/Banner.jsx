@@ -1,5 +1,6 @@
 import { Sparkles } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 
 const Banner = () => {
@@ -33,9 +34,11 @@ const Banner = () => {
             </p>
 
             <div className="flex flex-wrap gap-4 mt-10">
+             <Link href="/all-pets">
               <button className="bg-[#8B5CF6] hover:bg-[#7C3AED] transition text-white px-7 py-4 rounded-2xl shadow-xl shadow-purple-200 font-semibold">
                 Adopt Now
               </button>
+             </Link>
 
               <button className="bg-white border border-purple-200 hover:border-[#F472B6] hover:text-[#F472B6] transition px-7 py-4 rounded-2xl font-semibold">
                 Learn More

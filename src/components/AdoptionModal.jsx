@@ -17,7 +17,8 @@ export default function AdoptionModal({ pet }) {
   const [loading, setLoading] = useState(false);
 
   const isOwner = String(user?.id) === String(pet?.userId);
-  const isAdopted = pet?.status?.toLowerCase() === "approved";
+const isAdopted =
+  pet?.status?.toLowerCase() === "adopted";
   const isPending = pet?.status?.toLowerCase() === "pending";
   const isrejected = pet?.status?.toLowerCase() === "rejected";
   
