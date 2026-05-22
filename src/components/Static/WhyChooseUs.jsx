@@ -1,6 +1,6 @@
 export default function WhyChooseUs() {
   return (
-    <section className="py-16 px-4 lg:px-8 bg-[#FAF5FF]">
+    <section className="max-w-7xl mx-auto py-16 px-4 lg:px-8 bg-[#FAF5FF]">
       <div className="max-w-6xl mx-auto text-center mb-12">
         <h2 className="text-3xl font-bold text-[#374151]">
           Why Choose Us?
