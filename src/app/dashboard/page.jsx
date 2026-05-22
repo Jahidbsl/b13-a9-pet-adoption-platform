@@ -23,15 +23,36 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-const chartData = [
-  { name: "Mon", value: 12 },
-  { name: "Tue", value: 18 },
-  { name: "Wed", value: 10 },
-  { name: "Thu", value: 25 },
-  { name: "Fri", value: 20 },
-  { name: "Sat", value: 30 },
-  { name: "Sun", value: 22 },
-];
+const getDayName = (date) => {
+  return new Date(date).toLocaleDateString("en-US", {
+    weekday: "short",
+  });
+};
+
+const weekMap = {
+  Mon: 0,
+  Tue: 0,
+  Wed: 0,
+  Thu: 0,
+  Fri: 0,
+  Sat: 0,
+  Sun: 0,
+};
+
+// chart data logic
+adoptions.forEach((a) => {
+  const day = getDayName(a.createdAt);
+
+  if (weekMap[day] !== undefined) {
+    weekMap[day] += 1;
+  }
+});
+
+// convert to chart format
+const chartData = Object.keys(weekMap).map((day) => ({
+  name: day,
+  value: weekMap[day],
+}));
 
 const DashboardPage = () => {
   const [adoptions, setAdoptions] = useState([]);
