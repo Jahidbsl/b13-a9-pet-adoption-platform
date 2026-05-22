@@ -94,12 +94,11 @@ const EditModal = ({ pet }) => {
               <Surface>
                 <form
                   onSubmit={handleSubmit}
-                  className="grid grid-cols-1 md:grid-cols-2 gap-6"
+                  className="grid grid-cols-1 md:grid-cols-2 gap-6 bg-white/90 backdrop-blur-xl p-8 rounded-3xl border border-purple-100 shadow-[0_10px_40px_rgba(139,92,246,0.12)]"
                 >
                   {/* Pet Name */}
-                  {/* Pet Name */}
-                  <div>
-                    <label className="block text-gray-700 font-semibold mb-2">
+                  <div className="space-y-2">
+                    <label className="text-sm font-semibold text-gray-700">
                       Pet Name
                     </label>
 
@@ -107,21 +106,21 @@ const EditModal = ({ pet }) => {
                       type="text"
                       name="name"
                       defaultValue={name}
-                      placeholder="Pet Name"
-                      className="input"
+                      placeholder="Enter pet name"
+                      className="w-full rounded-2xl border border-gray-200 bg-white px-4 py-3 text-sm outline-none transition-all duration-300 focus:border-purple-400 focus:ring-4 focus:ring-purple-100"
                     />
                   </div>
 
                   {/* Species */}
-                  <div>
-                    <label className="block text-gray-700 font-semibold mb-2">
+                  <div className="space-y-2">
+                    <label className="text-sm font-semibold text-gray-700">
                       Species
                     </label>
 
                     <select
                       name="species"
                       defaultValue={species}
-                      className="input"
+                      className="w-full rounded-2xl border border-gray-200 bg-white px-4 py-3 text-sm outline-none transition-all duration-300 focus:border-purple-400 focus:ring-4 focus:ring-purple-100"
                     >
                       <option>Dog</option>
                       <option>Cat</option>
@@ -132,8 +131,8 @@ const EditModal = ({ pet }) => {
                   </div>
 
                   {/* Breed */}
-                  <div>
-                    <label className="block text-gray-700 font-semibold mb-2">
+                  <div className="space-y-2">
+                    <label className="text-sm font-semibold text-gray-700">
                       Breed
                     </label>
 
@@ -141,14 +140,14 @@ const EditModal = ({ pet }) => {
                       type="text"
                       name="breed"
                       defaultValue={breed}
-                      placeholder="Breed"
-                      className="input"
+                      placeholder="Enter breed"
+                      className="w-full rounded-2xl border border-gray-200 bg-white px-4 py-3 text-sm outline-none transition-all duration-300 focus:border-purple-400 focus:ring-4 focus:ring-purple-100"
                     />
                   </div>
 
                   {/* Age */}
-                  <div>
-                    <label className="block text-gray-700 font-semibold mb-2">
+                  <div className="space-y-2">
+                    <label className="text-sm font-semibold text-gray-700">
                       Age
                     </label>
 
@@ -156,30 +155,30 @@ const EditModal = ({ pet }) => {
                       type="number"
                       name="age"
                       defaultValue={age}
-                      placeholder="Age"
-                      className="input"
+                      placeholder="Enter age"
+                      className="w-full rounded-2xl border border-gray-200 bg-white px-4 py-3 text-sm outline-none transition-all duration-300 focus:border-purple-400 focus:ring-4 focus:ring-purple-100"
                     />
                   </div>
 
                   {/* Gender */}
-                  <div>
-                    <label className="block text-gray-700 font-semibold mb-2">
+                  <div className="space-y-2">
+                    <label className="text-sm font-semibold text-gray-700">
                       Gender
                     </label>
 
                     <select
                       name="gender"
                       defaultValue={gender}
-                      className="input"
+                      className="w-full rounded-2xl border border-gray-200 bg-white px-4 py-3 text-sm outline-none transition-all duration-300 focus:border-purple-400 focus:ring-4 focus:ring-purple-100"
                     >
                       <option>Male</option>
                       <option>Female</option>
                     </select>
                   </div>
 
-                  {/* Image */}
-                  <div>
-                    <label className="block text-gray-700 font-semibold mb-2">
+                  {/* Image URL */}
+                  <div className="space-y-2">
+                    <label className="text-sm font-semibold text-gray-700">
                       Image URL
                     </label>
 
@@ -187,14 +186,14 @@ const EditModal = ({ pet }) => {
                       type="text"
                       name="image"
                       defaultValue={image}
-                      placeholder="Image URL"
-                      className="input md:col-span-2"
+                      placeholder="Paste image URL"
+                      className="w-full rounded-2xl border border-gray-200 bg-white px-4 py-3 text-sm outline-none transition-all duration-300 focus:border-purple-400 focus:ring-4 focus:ring-purple-100"
                     />
                   </div>
 
                   {/* Health */}
-                  <div>
-                    <label className="block text-gray-700 font-semibold mb-2">
+                  <div className="space-y-2">
+                    <label className="text-sm font-semibold text-gray-700">
                       Health Status
                     </label>
 
@@ -202,21 +201,21 @@ const EditModal = ({ pet }) => {
                       type="text"
                       name="health"
                       defaultValue={health}
-                      placeholder="Health Status"
-                      className="input"
+                      placeholder="Healthy / Injured"
+                      className="w-full rounded-2xl border border-gray-200 bg-white px-4 py-3 text-sm outline-none transition-all duration-300 focus:border-purple-400 focus:ring-4 focus:ring-purple-100"
                     />
                   </div>
 
                   {/* Vaccination */}
-                  <div>
-                    <label className="block text-gray-700 font-semibold mb-2">
+                  <div className="space-y-2">
+                    <label className="text-sm font-semibold text-gray-700">
                       Vaccination
                     </label>
 
                     <select
                       name="vaccination"
                       defaultValue={vaccination}
-                      className="input"
+                      className="w-full rounded-2xl border border-gray-200 bg-white px-4 py-3 text-sm outline-none transition-all duration-300 focus:border-purple-400 focus:ring-4 focus:ring-purple-100"
                     >
                       <option>Vaccinated</option>
                       <option>Not Vaccinated</option>
@@ -224,8 +223,8 @@ const EditModal = ({ pet }) => {
                   </div>
 
                   {/* Location */}
-                  <div>
-                    <label className="block text-gray-700 font-semibold mb-2">
+                  <div className="space-y-2">
+                    <label className="text-sm font-semibold text-gray-700">
                       Location
                     </label>
 
@@ -233,14 +232,14 @@ const EditModal = ({ pet }) => {
                       type="text"
                       name="location"
                       defaultValue={location}
-                      placeholder="Location"
-                      className="input"
+                      placeholder="Enter location"
+                      className="w-full rounded-2xl border border-gray-200 bg-white px-4 py-3 text-sm outline-none transition-all duration-300 focus:border-purple-400 focus:ring-4 focus:ring-purple-100"
                     />
                   </div>
 
                   {/* Fee */}
-                  <div>
-                    <label className="block text-gray-700 font-semibold mb-2">
+                  <div className="space-y-2">
+                    <label className="text-sm font-semibold text-gray-700">
                       Adoption Fee
                     </label>
 
@@ -248,14 +247,14 @@ const EditModal = ({ pet }) => {
                       type="number"
                       name="fee"
                       defaultValue={fee}
-                      placeholder="Fee"
-                      className="input"
+                      placeholder="Enter fee"
+                      className="w-full rounded-2xl border border-gray-200 bg-white px-4 py-3 text-sm outline-none transition-all duration-300 focus:border-purple-400 focus:ring-4 focus:ring-purple-100"
                     />
                   </div>
 
                   {/* Email */}
-                  <div className="md:col-span-2">
-                    <label className="block text-gray-700 font-semibold mb-2">
+                  <div className="md:col-span-2 space-y-2">
+                    <label className="text-sm font-semibold text-gray-700">
                       Owner Email
                     </label>
 
@@ -264,34 +263,38 @@ const EditModal = ({ pet }) => {
                       name="email"
                       defaultValue={email}
                       readOnly
-                      className="input md:col-span-2 bg-gray-100"
+                      className="w-full rounded-2xl border border-gray-200 bg-gray-100 px-4 py-3 text-sm text-gray-500 cursor-not-allowed"
                     />
                   </div>
 
                   {/* Description */}
-                  <div className="md:col-span-2">
-                    <label className="block text-gray-700 font-semibold mb-2">
+                  <div className="md:col-span-2 space-y-2">
+                    <label className="text-sm font-semibold text-gray-700">
                       Description
                     </label>
 
                     <textarea
                       name="description"
                       defaultValue={description}
-                      className="input md:col-span-2"
                       rows={5}
                       placeholder="Write something about the pet..."
+                      className="w-full rounded-2xl border border-gray-200 bg-white px-4 py-3 text-sm outline-none transition-all duration-300 focus:border-purple-400 focus:ring-4 focus:ring-purple-100 resize-none"
                     />
                   </div>
 
                   {/* Buttons */}
-                  <div className="md:col-span-2 flex justify-end gap-3 mt-4">
-                    <Button slot="close" variant="secondary">
+                  <div className="md:col-span-2 flex items-center justify-end gap-4 pt-4">
+                    <Button
+                      slot="close"
+                      variant="secondary"
+                      className="rounded-2xl px-6 py-3"
+                    >
                       Cancel
                     </Button>
 
                     <Button
                       type="submit"
-                      className="bg-gradient-to-r from-[#8B5CF6] to-[#F472B6] text-white"
+                      className="rounded-2xl px-8 py-3 bg-gradient-to-r from-[#8B5CF6] via-[#A855F7] to-[#F472B6] text-white font-semibold shadow-lg hover:scale-[1.02] transition-all duration-300"
                     >
                       Save Update
                     </Button>
